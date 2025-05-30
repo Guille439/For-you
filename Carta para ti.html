@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Una carta para ti</title>
+  <style>
+    body {
+      background-color: #f9dede;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      margin: 0;
+    }
+
+    .envelope {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      background-color: #f9c5c8;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.6s ease;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      z-index: 1;
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 140px;
+      background-color: #f44336;
+      clip-path: polygon(0 0%, 50% 100%, 100% 0%);
+      transition: transform 0.6s ease;
+      transform-origin: top;
+      z-index: 2;
+    }
+
+    .card {
+      position: absolute;
+      width: 400px;
+      height: auto;
+      background: linear-gradient(135deg, #ffe8e8, #ffc1c5);
+      border-radius: 10px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+      transform: scale(0);
+      opacity: 0;
+      transition: all 0.8s ease;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #b71c1c;
+      text-align: center;
+      font-family: 'Georgia', serif;
+      line-height: 1.6;
+      box-sizing: border-box;
+      user-select: none;
+      max-width: 90vw;
+    }
+
+    .buttons {
+      position: fixed;
+      bottom: 40px;
+      z-index: 4;
+      display: flex;
+      gap: 20px;
+    }
+
+    button {
+      background-color: #f44336;
+      border: 2px solid #f44336;
+      color: white;
+      padding: 12px 28px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      box-shadow: 0 5px 15px rgba(244, 67, 54, 0.35);
+    }
+
+    button:hover {
+      background-color: white;
+      color: #f44336;
+      box-shadow: 0 5px 15px rgba(244, 67, 54, 0.6);
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 26px;
+      color: #e91e63;
+      animation: floatUp 2s ease-in forwards;
+      pointer-events: none;
+      user-select: none;
+      z-index: 100;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-200px) scale(1.8);
+      }
+    }
+
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .show {
+      transform: scale(1);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="envelope" id="envelope">
+    <div class="flap" id="flap"></div>
+  </div>
+
+  <div class="card" id="card">
+    <span>
+      Para: Bel ❤️<br><br>
+      Hay algo en tus ojitos color café que me atrapa, como si en ellos se escondiera un pedacito de cielo al atardecer. Cuando estoy contigo, todo se calma. Tu presencia me envuelve en una paz que no sabía que necesitaba, en una tranquilidad que solo tú puedes darme. No sé cómo explicarlo del todo, pero sé que te quiero muchísimo... más de lo que las palabras pueden decir.<br><br>
+      Espero te guste el detalle 🌷❤️
+    </span>
+  </div>
+
+  <div class="buttons">
+    <button onclick="openEnvelope()">ABRIR</button>
+    <button onclick="resetEnvelope()">CERRAR</button>
+  </div>
+
+  <script>
+    function openEnvelope() {
+      const envelope = document.getElementById('envelope');
+      const flap = document.getElementById('flap');
+      const card = document.getElementById('card');
+
+      flap.style.transform = 'rotateX(180deg)';
+
+      setTimeout(() => {
+        envelope.classList.add('hidden');
+        card.classList.add('show');
+      }, 600);
+
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.bottom = '20px';
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 2000);
+      }
+    }
+
+    function resetEnvelope() {
+      const envelope = document.getElementById('envelope');
+      const flap = document.getElementById('flap');
+      const card = document.getElementById('card');
+
+      envelope.classList.remove('hidden');
+      card.classList.remove('show');
+      flap.style.transform = 'rotateX(0deg)';
+    }
+  </script>
+
+</body>
+</html>
+
